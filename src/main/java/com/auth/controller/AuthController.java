@@ -64,7 +64,7 @@ public class AuthController {
 
         // Custom response
         Map<String, String> response = new HashMap<>();
-        response.put("message", "User registered successfully");
+        response.put("message", "Check your email for OTP verification");
         response.put("email", user.getEmail());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
