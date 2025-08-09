@@ -23,6 +23,7 @@ public class AuthUser {
     private boolean isVerified;
     private String otp;
     private LocalDateTime otpExpiry;
+    private boolean ResetPasswordAllowed;
 
 
     public Long getId() {
@@ -104,4 +105,14 @@ public class AuthUser {
     public void setOtpExpiry(LocalDateTime otpExpiry) {
         this.otpExpiry = otpExpiry;
     }
+
+    public boolean getResetPasswordAllowed() {
+        return ResetPasswordAllowed;
+    }
+
+    public void setResetPasswordAllowed(boolean resetPasswordAllowed) {
+        ResetPasswordAllowed = resetPasswordAllowed;
+    }
+
+
 }

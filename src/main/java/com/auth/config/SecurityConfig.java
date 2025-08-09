@@ -29,7 +29,10 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/auth/signup",
                                 "/api/auth/login",
-                                "/api/auth/verify"
+                                "/api/auth/verify",
+                                "/api/auth/reset-password",
+                                "/api/auth/forgot-password",
+                                "/api/auth/verify-reset-otp"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
