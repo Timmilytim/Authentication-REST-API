@@ -1,5 +1,6 @@
 package com.auth.controller;
 
+import com.auth.dto.LoginRequest;
 import com.auth.dto.SignupRequest;
 import com.auth.dto.VerifyOtpRequest;
 import com.auth.model.AuthUser;
@@ -82,10 +83,8 @@ public class AuthController {
 
         if (user.isVerified()) {
             // Optionally regenerate token or just return a valid one
-            String token = jwtUtil.generateToken(user.getEmail());
             return ResponseEntity.ok(Map.of(
-                    "message", "User already verified",
-                    "token", token
+                    "message", "User already verified"
             ));
         }
 
@@ -95,15 +94,36 @@ public class AuthController {
             user.setOtpExpiry(null);
             authUserRepository.save(user);
 
-            String token = jwtUtil.generateToken(user.getEmail());
 
             return ResponseEntity.ok(Map.of(
                     "message", "OTP verified successfully"
             ));
         }
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Invalid or expired OTP"));
     }
 
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+        AuthUser user = authUserRepository.findByEmailOrUsername(loginRequest.getEmail_or_username(),
+                loginRequest.getEmail_or_username());
+
+        // Check if user exists and password matches
+        if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
+        }
+
+        // Check if user is verified
+        if (!user.isVerified()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "User not verified"));
+        }
+
+        // Generate JWT token
+        String token = jwtUtil.generateToken(user.getUsername());
+        return ResponseEntity.ok(Map.of(
+                "message", "Login successful",
+                "token", token
+        ));
+    }
 
 }
