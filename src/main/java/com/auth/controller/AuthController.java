@@ -128,6 +128,7 @@ public class AuthController {
         ));
     }
 
+    // Endpoint to handle forgot password
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody VerifyOtpRequest request) {
         AuthUser user = authUserRepository.findByEmail(request.getEmail());
@@ -149,6 +150,7 @@ public class AuthController {
         ));
     }
 
+    // Endpoint to verify OTP for password reset
     @PostMapping("/verify-reset-otp")
     public ResponseEntity<?> verifyResetOtp(@RequestBody VerifyOtpRequest request) {
         AuthUser user = authUserRepository.findByEmail(request.getEmail());
@@ -167,6 +169,8 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Invalid or expired OTP"));
     }
 
+
+    // Endpoint to reset password
     @PostMapping("/reset-password")
     public ResponseEntity <?> resetPassword(@RequestBody ResetRequest resetRequest) {
         AuthUser user = authUserRepository.findByEmail(resetRequest.getEmail());
