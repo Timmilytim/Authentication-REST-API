@@ -4,7 +4,7 @@ import com.auth.dto.LoginRequest;
 import com.auth.dto.ResetRequest;
 import com.auth.dto.SignupRequest;
 import com.auth.dto.VerifyOtpRequest;
-import com.auth.model.AuthUser;
+import com.auth.model.User;
 import com.auth.repository.AuthUserRepository;
 import com.auth.service.EmailService;
 import com.auth.util.JwtUtil;
@@ -44,7 +44,7 @@ public class AuthController {
         }
 
         // Create a new user entity and set its properties
-        AuthUser user = new AuthUser();
+        User user = new User();
         user.setFirstName(signupRequest.getFirstName());
         user.setLastName(signupRequest.getLastName());
         user.setEmail(signupRequest.getEmail());
@@ -76,7 +76,7 @@ public class AuthController {
     // Endpoint to verify user email
     @PostMapping("/verify")
     public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequest request) {
-        AuthUser user = authUserRepository.findByEmail(request.getEmail());
+        User user = authUserRepository.findByEmail(request.getEmail());
 
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found"));
@@ -107,7 +107,7 @@ public class AuthController {
     // Endpoint to handle user login
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-        AuthUser user = authUserRepository.findByEmailOrUsername(loginRequest.getEmail_or_username(),
+        User user = authUserRepository.findByEmailOrUsername(loginRequest.getEmail_or_username(),
                 loginRequest.getEmail_or_username());
 
         // Check if user exists and password matches
@@ -131,7 +131,7 @@ public class AuthController {
     // Endpoint to handle forgot password
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody VerifyOtpRequest request) {
-        AuthUser user = authUserRepository.findByEmail(request.getEmail());
+        User user = authUserRepository.findByEmail(request.getEmail());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found"));
         }
@@ -153,7 +153,7 @@ public class AuthController {
     // Endpoint to verify OTP for password reset
     @PostMapping("/verify-reset-otp")
     public ResponseEntity<?> verifyResetOtp(@RequestBody VerifyOtpRequest request) {
-        AuthUser user = authUserRepository.findByEmail(request.getEmail());
+        User user = authUserRepository.findByEmail(request.getEmail());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found"));
         }
@@ -173,7 +173,7 @@ public class AuthController {
     // Endpoint to reset password
     @PostMapping("/reset-password")
     public ResponseEntity <?> resetPassword(@RequestBody ResetRequest resetRequest) {
-        AuthUser user = authUserRepository.findByEmail(resetRequest.getEmail());
+        User user = authUserRepository.findByEmail(resetRequest.getEmail());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "User not found"));
         }
@@ -194,4 +194,5 @@ public class AuthController {
 
         return ResponseEntity.ok(Map.of("message", "Password reset successfully"));
     }
+
 }
