@@ -64,7 +64,7 @@ Base URL: https://localhost:8080/api (Still local)
 
 ## 📡 API Endpoints
 ### 1. Sign Up
-      http://localhost:8080/api/auth/signup
+     Endpoint: POST http://localhost:8080/api/auth/signup
 Request Body
 
       {
@@ -76,8 +76,110 @@ Request Body
       }
 
 Response
-  ```bash
-     {
-      "message": "Check your email for OTP verification",
-      "email": "john@example.com"
+
+      {
+         "message": "Check your email for OTP verification",
+         "email": "john@example.com"
       }
+
+
+### 2. Email verification
+     Endpoint: POST http://localhost:8080/api/auth/verify
+Request Body
+
+      {
+         "email": "john@example.com",
+         "otp": "6 digits pin here"
+      }
+
+Response
+
+      {
+         "message": "OTP verified successfully"
+      }
+
+
+### 3. login
+     Endpoint: POST http://localhost:8080/api/auth/login
+Request Body
+
+      {
+         "email_or_username": "john@example.com", //You can also login with your username
+         "password":"password123"
+      }
+
+Response
+
+      {
+         "token": "your.jwt.token",
+         "message": "Login successful"
+      }
+
+
+### 4. Get User Details (Authenticated)
+      Endpoint: GET http://localhost:8080/api/user/profile
+Headers
+
+      Authorization: Bearer your.jwt.token
+
+
+Response
+
+      {
+         "firstName": "John",
+         "lastName": "Doe",
+         "email": "johndoe@example.com",
+         "username": "johndoe"
+      }
+      
+
+### 5. Forgot Password
+     Endpoint: POST http://localhost:8080/api/auth/forgot-password
+Request Body
+
+      {
+         "email": "johndoe@example.com"
+      }
+
+Response
+
+      {
+         "message": "Check your email for OTP verification",
+         "email": "john@example.com"
+      }
+
+    
+
+### 6. Verification of Reset OTP
+     Endpoint: POST http://localhost:8080/api/auth/verify-reset-otp
+Request Body
+
+      {
+         "email": "john@example.com",
+         "otp": "6 digits pin here"
+      }
+
+Response
+
+      {
+         "message": "OTP verified successfully, you can now reset your password"
+      }
+
+
+    
+
+### 7. Reset Password
+     Endpoint: POST http://localhost:8080/api/auth/reset-password
+Request Body
+
+      {
+         "email": "john@example.com",
+         "password": "NewPassword"
+      }
+
+Response
+
+      {
+         "message": "Password reset successfully"
+      }
+
