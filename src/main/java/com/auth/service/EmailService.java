@@ -36,11 +36,11 @@ public class EmailService {
 
             helper.setTo(toEmail);
             helper.setSubject("Your OTP Code");
-            helper.setText(htmlContent, true); // HTML content
+            helper.setText(htmlContent, true);
 
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            e.printStackTrace(); // Optional: Replace with logging
+            e.printStackTrace();
         }
     }
 

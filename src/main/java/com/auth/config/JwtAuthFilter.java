@@ -25,7 +25,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             "/api/auth/reset-password",
             "/api/auth/forgot-password",
             "/api/auth/verify-reset-otp"
-
     );
 
     @Autowired
