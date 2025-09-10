@@ -34,3 +34,7 @@ build/
 
 ### ENV ###
 .env
+.env.local
+.env.*.local
+target/
+*.jar
