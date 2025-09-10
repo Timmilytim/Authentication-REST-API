@@ -18,8 +18,8 @@ spring:
             enable: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/auth
-    username: root
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
     password:
 
   jpa:
